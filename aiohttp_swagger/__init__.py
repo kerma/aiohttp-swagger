@@ -27,12 +27,12 @@ def _swagger_home(request):
 @asyncio.coroutine
 def _swagger_def(request):
     """
-    Returns the Swagger JSON Definition
+    Return the Swagger JSON Definition
     """
     return web.json_response(text=request.app["SWAGGER_DEF_CONTENT"])
 
 
-STATIC_PATH = abspath(join(dirname(__file__), "swagger_ui"))
+STATIC_PATH = abspath(join(dirname(__file__), "swagger_ui3"))
 
 
 def setup_swagger(app: web.Application,
@@ -91,10 +91,8 @@ def setup_swagger(app: web.Application,
     with open(join(STATIC_PATH, "index.html"), "r") as f:
         app["SWAGGER_TEMPLATE_CONTENT"] = (
             f.read()
-            .replace("##SWAGGER_CONFIG##", '/{}{}'.
-                     format(api_base_url.lstrip('/'), _swagger_def_url))
-            .replace("##STATIC_PATH##", '/{}{}'.
-                     format(api_base_url.lstrip('/'), statics_path))
+            .replace("##SWAGGER_CONFIG##", _swagger_def_url)
+            .replace("##STATIC_PATH##", statics_path)
         )
 
 
